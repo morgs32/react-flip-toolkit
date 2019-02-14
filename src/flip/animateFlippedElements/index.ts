@@ -281,22 +281,22 @@ export default ({
       // we're only going to animate the values that the child wants animated
       if (flipConfig.translate) {
         transformsArray.push(
-          Rematrix.translateX(prevRect.left - currentRect.left)
+          Rematrix.translateX(Math.round(prevRect.left - currentRect.left))
         )
         transformsArray.push(
-          Rematrix.translateY(prevRect.top - currentRect.top)
+          Rematrix.translateY(Math.round(prevRect.top - currentRect.top))
         )
       }
       // going any smaller than 1px breaks transitions in Chrome
       if (flipConfig.scale) {
         transformsArray.push(
           Rematrix.scaleX(
-            Math.max(prevRect.width, 1) / Math.max(currentRect.width, 1)
+            prevRect.width / currentRect.width
           )
         )
         transformsArray.push(
           Rematrix.scaleY(
-            Math.max(prevRect.height, 1) / Math.max(currentRect.height, 1)
+            prevRect.height / currentRect.height
           )
         )
       }
@@ -397,7 +397,7 @@ export default ({
           const vals: AnimatedVals = { matrix: [] }
 
           vals.matrix = fromVals.matrix.map((fromVal, index) =>
-            tweenProp(fromVal, toVals.matrix[index], currentValue)
+            Math.round(tweenProp(fromVal, toVals.matrix[index], currentValue))
           )
 
           if (animateOpacity) {
